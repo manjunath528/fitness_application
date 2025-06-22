@@ -1,0 +1,10 @@
+id,workout_name,membership_id,description
+1,Chest,1,"Focuses on chest muscles using pressing and fly movements."
+2,Back,1,"Strengthens the back with pulling exercises."
+3,Legs,1,"Targets quads, hamstrings, glutes, and calves."
+4,Shoulders,1,"Works deltoid muscles and traps for upper body stability."
+5,Biceps,1,"Focuses on curling exercises to build bicep strength."
+6,Triceps,1,"Strengthens triceps through push and extension movements."
+7,Abs,1,"Core-focused exercises to build endurance and definition."
+8,Full Body / Functional Training,1,"High-intensity, full-body movements for overall fitness."
+9,Rest / Active Recovery,1,"Recovery exercises to enhance mobility and prevent injuries."

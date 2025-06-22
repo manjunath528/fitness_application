@@ -1,0 +1,96 @@
+<!-- Database changeset file created by Manjunath Reddy -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="user_health_details" author="Manjunath Reddy">
+        <createTable tableName="user_health_details">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_HEALTH_ID"/>
+            </column>
+            <column name="login_id" type="varchar(128)"/>
+            <column name="age" type="bigint"/>
+            <column name="gender" type="varchar(128)"/>
+            <column name="height" type="bigint"/>
+            <column name="current_weight" type="bigint"/>
+            <column name="goal_weight" type="bigint"/>
+            <column name="activity_level" type="varchar(128)"/>
+            <column name="target_calories" type="bigint"/>
+            <column name="created_ts" type="datetime"/>
+            <column name="updated_ts" type="datetime"/>
+        </createTable>
+
+        <createSequence sequenceName="sequence_user_health_details"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint baseColumnNames="login_id"
+                                 baseTableName="user_health_details"
+                                 constraintName="FMC_FK_USER_HEALTH_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="login_id"
+                                 referencedTableName="user_account"/>
+
+    </changeSet>
+
+    <changeSet id="user_daily_plan" author="Manjunath Reddy">
+        <createTable tableName="user_daily_plan">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_USER_DAILYPLAN_ID"/>
+            </column>
+            <column name="login_id" type="varchar(128)"/>
+            <column name="calories_goal" type="bigint"/>
+            <column name="protein_goal" type="bigint"/>
+            <column name="carbs_goal" type="bigint"/>
+            <column name="fats_goal" type="bigint"/>
+            <column name="created_ts" type="datetime"/>
+            <column name="updated_ts" type="datetime"/>
+        </createTable>
+
+        <createSequence sequenceName="sequence_user_daily_plan"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint baseColumnNames="login_id"
+                                 baseTableName="user_daily_plan"
+                                 constraintName="FMC_FK_USER_DAILYPLAN_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="login_id"
+                                 referencedTableName="user_account"/>
+
+    </changeSet>
+    <changeSet id="login_data_table" author="Manjunath Reddy">
+        <createTable tableName="login_data">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_LOGIN_DATA"/>
+            </column>
+            <column name="login_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login_timestamp" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="logout_timestamp" type="TIMESTAMP"/>
+        </createTable>
+        <createSequence sequenceName="sequence_login_data"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint
+                constraintName="fk_login_data_user_account"
+                baseTableName="login_data"
+                baseColumnNames="login_id"
+                referencedTableName="user_account"
+                referencedColumnNames="login_id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+
+</databaseChangeLog>

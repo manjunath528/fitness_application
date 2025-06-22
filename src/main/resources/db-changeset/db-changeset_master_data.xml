@@ -1,0 +1,16 @@
+<!-- Database changeset file created by Manjunath Reddy -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="load_data_master_data" author="Manjunath Reddy">
+        <loadData tableName="country" file="db_data/country.csv"/>
+        <loadData tableName="state" file="db_data/state.csv"/>
+        <loadData tableName="city" file="db_data/city.csv"/>
+        <loadData tableName="memberships" file="db_data/memberships.csv"/>
+        <loadData tableName="workout" file="db_data/workouts.csv"/>
+        <loadData tableName="exercise" file="db_data/exercises.csv"/>
+        <loadData tableName="badge" file="db_data/badge.csv"/>
+    </changeSet>
+</databaseChangeLog>

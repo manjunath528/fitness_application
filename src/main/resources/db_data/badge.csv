@@ -1,0 +1,14 @@
+name,description,criteria,target_value,created_ts
+Workout Novice,Complete 5 workouts,workouts_completed,5,2024-01-01 00:00:00
+Workout Pro,Complete 10 workouts,workouts_completed,10,2024-01-01 00:00:00
+Workout Master,Complete 25 workouts,workouts_completed,25,2024-01-01 00:00:00
+Login Streak Beginner,Login 3 days in a row,login_streak,3,2024-01-01 00:00:00
+Login Streak Champ,Login 7 days in a row,login_streak,7,2024-01-01 00:00:00
+Login Streak Legend,Login 30 days in a row,login_streak,30,2024-01-01 00:00:00
+First Login,Congratulations on your first login!,first_login,1,2024-01-01 00:00:00
+Profile Completed,Completed all personal and health profile fields,profile_completion,1,2024-01-01 00:00:00
+Daily Check-In,Checked in for the day,daily_checkin,1,2024-01-01 00:00:00
+Consistency King,Checked in 15 days in a month,daily_checkin_streak,15,2024-01-01 00:00:00
+100 Day Member,Celebrate 100 days of membership,membership_duration,100,2024-01-01 00:00:00
+Calories Burner,Burned 5000 calories,calories_burned,5000,2024-01-01 00:00:00
+Calorie Hero,Burned 10000 calories,calories_burned,10000,2024-01-01 00:00:00

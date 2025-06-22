@@ -1,0 +1,326 @@
+<!-- Database changeset file created by Manjunath Reddy -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="user_account" author="Manjunath Reddy">
+        <createTable tableName="user_account">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_USER_ID"/>
+            </column>
+            <column name="login_id" type="varchar(128)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="email_id" type="varchar(128)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(128)"/>
+            <column name="membershipId" type="bigint"/>
+            <column name="personal_details_status" type="varchar(128)"/>
+            <column name="health_details_status" type="varchar(128)"/>
+            <column name="created_ts" type="datetime"/>
+            <column name="updated_ts" type="datetime"/>
+        </createTable>
+        <createSequence sequenceName="sequence_user_account"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+    </changeSet>
+    <changeSet id="country" author="Manjunath Reddy">
+        <createTable tableName="country">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_COUNTRY_ID"/>
+            </column>
+            <column name="country" type="varchar(128)"/>
+        </createTable>
+        <createSequence sequenceName="sequence_country"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+    </changeSet>
+    <changeSet id="state" author="Manjunath Reddy">
+        <createTable tableName="state">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_STATE_ID"/>
+            </column>
+            <column name="time_zone" type="varchar(128)"/>
+            <column name="country_id" type="bigint"/>
+            <column name="state" type="varchar(128)"/>
+            <column name="offset" type="varchar(128)"/>
+            <column name="state_with_time_zone" type="varchar(128)"/>
+        </createTable>
+        <createSequence sequenceName="sequence_state"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="state"
+                                 constraintName="FMC_FK_COUNTRY_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"/>
+    </changeSet>
+
+    <changeSet id="city" author="Manjunath Reddy">
+        <createTable tableName="city">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_CITY_ID"/>
+            </column>
+            <column name="state_id" type="bigint"/>
+            <column name="city" type="varchar(128)"/>
+        </createTable>
+        <createSequence sequenceName="sequence_city"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint baseColumnNames="state_id"
+                                 baseTableName="city"
+                                 constraintName="FMC_FK_STATE_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="state"/>
+
+    </changeSet>
+
+    <changeSet id="user_personal_details" author="Manjunath Reddy">
+    <createTable tableName="user_personal_details">
+        <column name="id" type="bigint">
+            <constraints primaryKey="true" nullable="false" primaryKeyName="PK_USER_PERSONAL_DETAILS_ID"/>
+        </column>
+        <column name="login_id" type="varchar(128)"/>
+        <column name="first_name" type="varchar(128)"/>
+        <column name="last_name" type="varchar(128)"/>
+        <column name="mobile_number" type="varchar(128)"/>
+        <column name="country_id" type="bigint"/>
+        <column name="state_id" type="bigint"/>
+        <column name="city_id" type="bigint"/>
+        <column name="created_ts" type="datetime"/>
+        <column name="updated_ts" type="datetime"/>
+    </createTable>
+    <createSequence sequenceName="sequence_user_personal_details"
+                    minValue="1"
+                    startValue="1"
+                    incrementBy="1"
+                    cycle="true"
+    />
+        <addForeignKeyConstraint baseColumnNames="login_id"
+                                 baseTableName="user_personal_details"
+                                 constraintName="FMC_FK_USER_PERSONAL_DETAILS_LOGIN_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="login_id"
+                                 referencedTableName="user_account"/>
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="user_personal_details"
+                                 constraintName="FMC_FK_USER_PERSONAL_DETAILS_COUNTRY_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"/>
+        <addForeignKeyConstraint baseColumnNames="state_id"
+                                 baseTableName="user_personal_details"
+                                 constraintName="FMC_FK_USER_PERSONAL_DETAILS_STATE_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="state"/>
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="user_personal_details"
+                                 constraintName="FMC_FK_USER_PERSONAL_DETAILS_CITY_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+
+    </changeSet>
+
+    <changeSet id="memberships" author="Manjunath Reddy">
+        <createTable tableName="memberships">
+            <column name="id" type ="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_MEMBERSHIP_ID"/>
+            </column>
+            <column name="name" type="varchar(128)"/>
+            <column name="price" type="varchar(128)"/>
+            <column name="duration" type="varchar(128)"/>
+
+        </createTable>
+        <createSequence sequenceName="sequence_membership"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+    </changeSet>
+
+
+    <changeSet id="workout" author="Manjunath Reddy">
+        <createTable tableName="workout">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_WORKOUT_ID"/>
+            </column>
+            <column name="workout_name" type="varchar(128)"/>
+            <column name="membership_id" type="bigint"/>
+            <column name="description" type="varchar(128)"/>
+        </createTable>
+        <createSequence sequenceName="sequence_workout"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint baseColumnNames="membership_id"
+                                 baseTableName="workout"
+                                 constraintName="FMC_FK_MEMBERSHIP_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="memberships"/>
+    </changeSet>
+
+    <changeSet id="exercise" author="Manjunath Reddy">
+        <createTable tableName="exercise">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_EXERCISE_ID"/>
+            </column>
+            <column name="exercise_name" type="varchar(128)"/>
+            <column name="workout_id" type="bigint"/>
+            <column name="muscle_group" type="varchar(128)"/>
+            <column name="description" type="varchar(128)"/>
+        </createTable>
+        <createSequence sequenceName="sequence_exercise"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint baseColumnNames="workout_id"
+                                 baseTableName="exercise"
+                                 constraintName="FMC_FK_WORKOUT_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="workout"/>
+    </changeSet>
+
+    <changeSet id="badge" author="Manjunath Reddy">
+        <createTable tableName="badge">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_BADGE_ID"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="VARCHAR(1024)"/>
+            <column name="criteria" type="VARCHAR(255)"/> <!-- e.g., '10_workouts', 'first_login' -->
+            <!-- <column name="icon_url" type="VARCHAR(512)"/>  optional image/icon -->
+            <column name="target_value" type="INT" defaultValueNumeric="1"/>
+            <column name="created_ts" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createSequence sequenceName="sequence_badge"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+    </changeSet>
+
+    <changeSet id="user_badge" author="Manjunath Reddy">
+        <createTable tableName="user_badge">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_USER_BADGE_ID"/>
+            </column>
+            <column name="login_id" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="badge_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="awarded_ts" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createSequence sequenceName="sequence_user_badge"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint baseColumnNames="login_id"
+                                 baseTableName="user_badge"
+                                 constraintName="FMC_FK_USER_BADGE_LOGIN_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="login_id"
+                                 referencedTableName="user_account"/>
+
+        <addForeignKeyConstraint baseColumnNames="badge_id"
+                                 baseTableName="user_badge"
+                                 constraintName="FMC_FK_USER_BADGE_BADGE_ID"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="badge"/>
+    </changeSet>
+    <changeSet id="user_table" author="Manjunath Reddy">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_USER_JWT_ID"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence sequenceName="sequence_user_jwt"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+    </changeSet>
+
+    <changeSet id="token_table" author="Manjunath Reddy">
+        <createTable tableName="token">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="PK_TOKEN_ID"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="expired" type="BOOLEAN">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createSequence sequenceName="sequence_token"
+                        minValue="1"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="true"
+        />
+        <addForeignKeyConstraint
+                baseTableName="token"
+                baseColumnNames="user_id"
+                constraintName="fk_token_user"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
