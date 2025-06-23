@@ -15,13 +15,17 @@ public class ProfileCompletionEvaluator implements BadgeCriteriaEvaluator {
     @Override
     public boolean isEligible(String loginId, Badge badge) {
         UserAccount userAccount = userAccountRepository.findByLoginId(loginId);
-        if(userAccount.getPersonal_details_status().equals("Active") && userAccount.getPersonal_details_status().equals("Uploaded")){
-            return true;
+        if (userAccount != null) {
+            String personalStatus = userAccount.getPersonal_details_status();
+            String healthStatus = userAccount.getHealth_details_status();
+            if ("Active".equals(personalStatus) && "Uploaded".equals(healthStatus)) {
+                return true;
+            }
         }
         return false;
     }
     @Override
     public String getCriteriaKey() {
-        return "profile_complete";
+        return "profile_completion";
     }
 }
