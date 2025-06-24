@@ -41,7 +41,6 @@ Sample error response:
 Flow:
 - POST /api/v1/user-sign-up → register user
 - POST /api/v1/user-login → obtain JWT token
-- POST /api/v1/user-logout → invalidate session
 
 👉 All secured endpoints require:
 ```
@@ -59,8 +58,6 @@ The diagram below illustrates how JWT (JSON Web Token) authentication is impleme
    - Confirms token expiration
    - Validates claims (e.g., user roles, permissions)
 - 6️⃣ If valid, the request proceeds; if not, the server returns an appropriate error (e.g., 401 Unauthorized).
-- 7️⃣ The logout API (/api/v1/user-logout) allows users to explicitly invalidate their session (e.g., via token blacklisting or client-side removal).
-
 
 👉 This approach ensures stateless, secure communication between client and server, without maintaining server-side session data.
 
